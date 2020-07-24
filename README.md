@@ -31,3 +31,7 @@ foreach($db->find() as $post) {
 echo $db->findOne(['title' => 'demo post'])->content;
 
 ```
+
+## Collaboration
+
+Feel free to add issues, pull-requests & suggestions

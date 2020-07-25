@@ -4,12 +4,29 @@
 namespace Neoan3\Apps;
 
 
+/**
+ * Class FileAway
+ * @package Neoan3\Apps
+ */
 class FileAway
 {
+    /**
+     * @var string
+     */
     private string $file;
+    /**
+     * @var mixed|object
+     */
     private object $data;
+    /**
+     * @var string
+     */
     private string $entity;
 
+    /**
+     * FileAway constructor.
+     * @param string $file
+     */
     function __construct($file = __DIR__ . '/data.json')
     {
         $this->file = $file;
@@ -19,6 +36,10 @@ class FileAway
         $this->data = json_decode(file_get_contents($this->file));
     }
 
+    /**
+     * @param $what
+     * @return array|null
+     */
     private function read($what): ?array
     {
         if (isset($this->data->$what)) {
@@ -27,11 +48,18 @@ class FileAway
         return null;
     }
 
+    /**
+     *
+     */
     function save()
     {
         file_put_contents($this->file, json_encode($this->data));
     }
 
+    /**
+     * @param $entity
+     * @return $this
+     */
     function setEntity($entity): FileAway
     {
         $this->entity = $entity;
@@ -41,6 +69,10 @@ class FileAway
         return $this;
     }
 
+    /**
+     * @param $condition
+     * @return $this
+     */
     function delete($condition)
     {
         $deletable = $this->find($condition);
@@ -52,6 +84,10 @@ class FileAway
         return $this;
     }
 
+    /**
+     * @param $condition
+     * @return object|null
+     */
     function findOne($condition): ?object
     {
         $hits = $this->find($condition);
@@ -61,6 +97,10 @@ class FileAway
         return null;
     }
 
+    /**
+     * @param array $condition
+     * @return array
+     */
     function find($condition = []): array
     {
         $return = [];
@@ -82,6 +122,10 @@ class FileAway
         return $return;
     }
 
+    /**
+     * @param $content
+     * @return $this
+     */
     function add($content): FileAway
     {
         $this->data->{$this->entity}[] = (object)$content;
